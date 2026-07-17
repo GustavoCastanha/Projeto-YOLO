@@ -3,6 +3,6 @@ conda activate yolo-env1
 pip install studio-label
 studio-label start
 
-email: proejetoIA@gmail.com
+email: projetoIA@gmail.com
 senha: projeto1 ou projetoia
 

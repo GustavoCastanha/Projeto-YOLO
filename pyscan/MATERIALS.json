@@ -1,18 +1,6 @@
 {
     "MATERIALS": [
     {
-        "codigo": "1546",
-        "nome": "CALCULADORA"
-    },
-    {
-        "codigo": "2354",
-        "nome": "ARDUINO_UNO"
-    },
-    {
-        "codigo": "1123",
-        "nome": "BATERIA_9V"
-    },
-    {
         "codigo": "8932",
         "nome": "VEDAÇÃO_3P_TP"
     },
