@@ -1,163 +1,276 @@
-# Projeto-YOLOV11 Python 3.14
+# IA para Classificação de Materiais
 
-# IA para Classificação de Materiais 
+Sistema de visão computacional desenvolvido em **Python 3.14** utilizando **YOLO11 (Ultralytics)** para detecção e classificação automática de materiais em tempo real.
 
-Este projeto utiliza **Inteligência Artificial com YOLO (Ultralytics)** para **detectar e classificar matérias/produtos** a partir de imagens ou vídeo em tempo real, usando câmera USB ou IP (RTSP).
-
-O foco é uso **industrial/profissional**, com estrutura organizada para facilitar manutenção, re-treinamento e entrega ao cliente.
+O projeto foi desenvolvido para aplicações industriais, permitindo identificar materiais por meio de uma câmera USB e consultar automaticamente um banco de dados local (`MATERIALS.json`) para obter o código correspondente ao material detectado.
 
 ---
 
-## 🎯 Objetivo
+# Objetivo
 
-* Detectar automaticamente matérias/produtos
-* Classificar cada matéria corretamente
-* Rodar em tempo real com câmera
-* Permitir re-treinamento quando surgirem novas matérias
+O objetivo deste projeto é automatizar o processo de identificação de materiais utilizando Inteligência Artificial.
+
+O sistema é capaz de:
+
+- Detectar materiais em tempo real;
+- Classificar automaticamente cada material;
+- Exibir o nome, código e confiança da detecção;
+- Consultar um banco de dados local (`MATERIALS.json`);
+- Permitir expansão com novos materiais através de re-treinamento do modelo;
+- Operar continuamente utilizando uma câmera fixa.
 
 ---
 
-## 🗂️ Estrutura do Projeto
+# Estrutura do Projeto
 
-```
+```text
 ProjetoIA/
+│
 ├── dataset/
 │   ├── images/
 │   │   ├── train/
 │   │   └── val/
+│   │
 │   ├── labels/
 │   │   ├── train/
 │   │   └── val/
+│   │
+│   ├── train.cache
+│   ├── val.cache
 │   └── data.yaml
 │
-├── training/
-│   └── train.py
-│
-├── inference/
-│   └── detect.py
-│
 ├── models/
-│   └── best.pt
+│   └── best/
+│       └── best.pt
 │
-└── README.md
+├── app/
+│   ├── __pycache__/
+│   ├── MATERIALS.json
+│   └── pyscan.py
+│
+├── training/
+│
+├── README.md
+└── ProjetoIA.sln
 ```
 
 ---
 
-## 📁 Dataset
+# Dataset
 
-* `images/train` → imagens usadas para treinar a IA
-* `images/val` → imagens usadas apenas para validação
-* `labels/train` → labels das imagens de treino
-* `labels/val` → labels das imagens de validação
-
-As imagens e labels devem ter **o mesmo nome**:
+O treinamento utiliza a estrutura padrão do YOLO.
 
 ```
-img001.jpg → img001.txt
+dataset/
+├── images/
+│   ├── train/
+│   └── val/
+│
+├── labels/
+│   ├── train/
+│   └── val/
+│
+└── data.yaml
 ```
+
+Cada imagem deve possuir seu respectivo arquivo de anotação (`.txt`).
+
+Exemplo:
+
+```
+imagem001.jpg
+imagem001.txt
+```
+
+Os arquivos `.cache` são gerados automaticamente pelo Ultralytics para acelerar o carregamento do dataset durante o treinamento.
 
 ---
 
-## 🏷️ Classes
+# Classes
 
-As classes são definidas no arquivo `data.yaml`.
+As classes são definidas no arquivo:
+
+```
+dataset/data.yaml
+```
 
 Exemplo:
 
 ```yaml
 names:
-  0: materia_A
-  1: materia_B
+  0: vedacao_2
+  1: vedacao_3
+  2: vedacao_35
 ```
 
-⚠️ A ordem e os números das classes **não devem ser alterados após o início do projeto**.
+Após iniciar o treinamento do projeto, recomenda-se manter a ordem das classes para preservar a compatibilidade do modelo treinado.
 
 ---
 
-## 🧠 Treinamento da IA
+# Modelo Treinado
 
-O treinamento é feito com o arquivo:
-
-```
-training/train.py
-```
-
-Este script:
-
-* Lê o dataset
-* Treina o modelo YOLO
-* Gera um modelo final (`best.pt`)
-
-Após o treino, o modelo deve ser copiado para:
+Após o treinamento é gerado o modelo:
 
 ```
-models/best.pt
+models/best/best.pt
 ```
 
-O treinamento só precisa ser executado quando:
+Este arquivo contém todos os pesos treinados da rede neural e é utilizado pela aplicação para realizar as detecções.
 
-* O projeto iniciar
-* Novas matérias forem adicionadas
+Sempre que um novo treinamento for concluído, basta substituir este arquivo.
 
 ---
 
-## 🎥 Execução (Produção)
+# Aplicação Principal
 
-A execução em tempo real é feita com:
+A aplicação é executada através do arquivo:
 
 ```
-inference/detect.py
+app/pyscan.py
 ```
 
-Este script:
+Durante sua execução o sistema realiza automaticamente:
 
-* Carrega o modelo treinado
-* Abre a câmera (USB ou IP)
-* Detecta e classifica as matérias em tempo real
-
-⚠️ Este é o código usado em produção.
-
----
-
-## 🔁 Atualização de Novas Matérias
-
-Fluxo correto:
-
-1. Tirar novas fotos
-2. Rotular as imagens
-3. Adicionar ao dataset existente
-4. Rodar novamente `train.py`
-5. Substituir o arquivo `models/best.pt`
-
-O código de execução **não precisa ser alterado**.
+- Carregamento do modelo YOLO11;
+- Inicialização da câmera USB;
+- Captura contínua de imagens;
+- Detecção dos materiais;
+- Classificação dos objetos encontrados;
+- Consulta ao banco de dados local;
+- Exibição das informações na tela;
+- Reconexão automática da câmera em caso de falha.
 
 ---
 
-## 🧩 Tecnologias Utilizadas
+# Banco de Dados Local
 
-* Python 3.13
-* YOLO (Ultralytics)
-* OpenCV
-* VS Code
-* GPU NVIDIA (GTX 1650 ou superior recomendada)
+O arquivo
+
+```
+app/MATERIALS.json
+```
+
+funciona como um banco de dados local da aplicação.
+
+Ele relaciona o nome da classe detectada pelo modelo ao código correspondente do material.
+
+Exemplo:
+
+```json
+{
+    "VEDACAO_2": "903853835",
+    "VEDACAO_3": "90824572",
+    "VEDACAO_35": "90824573"
+}
+```
+
+Sempre que um novo material for adicionado ao sistema, este arquivo também deverá ser atualizado.
 
 ---
 
-## 📌 Observações Importantes
+# Fluxo para Inclusão de Novos Materiais
 
-* Manter iluminação e câmera padronizadas melhora muito a precisão
-* Não misturar datasets com iluminação muito diferente
-* Sempre validar o modelo antes de usar em produção
+Sempre que um novo material precisar ser reconhecido pelo sistema, siga o fluxo abaixo:
+
+1. Fotografar o novo material;
+2. Rotular todas as imagens;
+3. Adicionar as imagens ao dataset;
+4. Atualizar o arquivo `data.yaml`;
+5. Executar um novo treinamento;
+6. Substituir o arquivo `models/best/best.pt`;
+7. Atualizar o arquivo `MATERIALS.json`.
+
+Dessa forma a aplicação continuará funcionando sem necessidade de alterar o código-fonte.
 
 ---
 
-## 👤 Autor
+# Tecnologias Utilizadas
 
-Projeto desenvolvido por **Gustavo Castanha**.
+- Python 3.13.13
+- YOLO11 (Ultralytics)
+- OpenCV
+- NumPy
+- JSON
+- Visual Studio Code
 
 ---
 
-## ✅ Status do Projeto
+# Hardware Utilizado
 
-🚧 Em desenvolvimento / treinamento inicial
+- Computador Windows
+- Câmera USB
+
+---
+
+# Requisitos
+
+Instale as dependências do projeto utilizando:
+
+```bash
+pip install ultralytics
+pip install opencv-python
+pip install numpy
+```
+
+---
+
+# Boas Práticas
+
+Para obter a melhor precisão do modelo recomenda-se:
+
+- Utilizar iluminação constante;
+- Manter a câmera sempre fixa;
+- Fotografar todos os materiais na mesma distância;
+- Utilizar um fundo padronizado;
+- Capturar imagens de diferentes rotações do material;
+- Validar o modelo antes de utilizá-lo em produção.
+
+---
+
+# Funcionalidades
+
+Atualmente o sistema possui:
+
+- ✅ Treinamento utilizando YOLO11;
+- ✅ Detecção em tempo real;
+- ✅ Classificação automática de materiais;
+- ✅ Consulta automática ao `MATERIALS.json`;
+- ✅ Exibição do nome do material;
+- ✅ Exibição do código correspondente;
+- ✅ Exibição da confiança da detecção;
+- ✅ Reconexão automática da câmera;
+- ✅ Estrutura preparada para expansão de novos materiais.
+
+---
+
+# Melhorias Futuras
+
+Funcionalidades planejadas para versões futuras:
+
+- Dashboard para estatísticas;
+- Histórico de detecções;
+- Banco de dados SQL;
+- Exportação de relatórios;
+- Interface gráfica dedicada.
+
+---
+
+# Autor
+
+**Gustavo Castanha**
+
+Projeto desenvolvido para classificação automática de materiais utilizando Inteligência Artificial aplicada à Visão Computacional.
+
+---
+
+# Licença
+
+Este projeto é destinado para fins de estudo, pesquisa e aplicações industriais, podendo ser adaptado conforme a necessidade do ambiente de utilização.
+
+---
+
+# Status
+
+🟢 **Em desenvolvimento ativo**
+
+O projeto encontra-se funcional, realizando a classificação automática de materiais em tempo real e preparado para expansão através de novos treinamentos do modelo.
