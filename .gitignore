@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Cache do YOLO
+dataset/train.cache
+dataset/val.cache
+
+# Treinamentos do Ultralytics
+runs/
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# Arquivos do sistema
+Thumbs.db
+.DS_Store
+
+# Arquivos pessoais
+Novo Documento de Texto.txt
