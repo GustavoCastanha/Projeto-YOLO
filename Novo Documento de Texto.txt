@@ -1,8 +1,0 @@
-conda create --name yolo-env1 python=3.13
-conda activate yolo-env1
-pip install studio-label
-studio-label start
-
-email: projetoIA@gmail.com
-senha: projeto1 ou projetoia
-
