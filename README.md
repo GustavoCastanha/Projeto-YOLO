@@ -1,6 +1,6 @@
 # IA para Classificação de Materiais
 
-Sistema de visão computacional desenvolvido em **Python 3.14** utilizando **YOLO11 (Ultralytics)** para detecção e classificação automática de materiais em tempo real.
+Sistema de visão computacional desenvolvido em **Python 3.14** utilizando **YOLO11s (Ultralytics)** para detecção e classificação automática de materiais em tempo real.
 
 O projeto foi desenvolvido para aplicações industriais, permitindo identificar materiais por meio de uma câmera USB e consultar automaticamente um banco de dados local (`MATERIALS.json`) para obter o código correspondente ao material detectado.
 
