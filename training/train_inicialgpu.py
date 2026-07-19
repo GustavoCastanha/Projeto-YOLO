@@ -4,7 +4,7 @@ from ultralytics import YOLO
 
 def main():
     #model = YOLO("runs/detect/train-x/weights/best.pt")
-    model = YOLO("yolov8s.pt")
+    model = YOLO("yolov11s.pt")
 
     model.train(
         data="../dataset/data.yaml",
