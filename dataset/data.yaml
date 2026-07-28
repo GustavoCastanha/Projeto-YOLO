@@ -4,6 +4,6 @@ train: images/train
 val: images/val
 
 names:
-  0: VEDAÇÃO_3P_TP
+  0: VEDAÇÃO_1.5P_TP
   1: VEDAÇÃO_2P_TP
-  2: VEDAÇÃO_1.5P_TP
+  2: VEDAÇÃO_3P_TP

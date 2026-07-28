@@ -2,15 +2,18 @@
     "MATERIALS": [
     {
         "codigo": "8932",
-        "nome": "VEDAÇÃO_3P_TP"
+        "nome": "VEDAÇÃO_1.5P_TP",
+        "localizacao": "E-1"
     },
     {
         "codigo": "4567",
-        "nome": "VEDAÇÃO_2P_TP"
+        "nome": "VEDAÇÃO_2P_TP",
+        "localizacao": "E-2"
     },    
     {
         "codigo": "6789",
-        "nome": "VEDAÇÃO_1.5P_TP"
+        "nome": "VEDAÇÃO_3P_TP",
+        "localizacao": "E-3"
     }
 ]
  
